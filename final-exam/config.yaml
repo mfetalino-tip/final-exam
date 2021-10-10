@@ -1,0 +1,28 @@
+git_repo: 'https://github.com/mfetalino-tip/sysad2-12021.git'
+git_dest: '/home/{{ ansible_user }}/sysad2-12021'
+git_ver: 'prelim-exam'
+
+ubuntu_vsftpd: u-vsftpd.conf
+centos_vsftpd: c-vsftpd.conf
+opensuse_vsftpd: o-vsftpd.conf
+
+name: ftpuser
+password: $5$Xz2k7xh2IwRAOtda$X/yQSNPOlQ0Y7t4OdlLCPvrf6vb0DAZEaJfE5tBux.D
+user_comment: "FTP User"
+
+nagios_user: nagiosadmin
+nagios_password: password
+
+motd: "Ansible Managed by {{ ansible_user }}"
+
+docker_repo: docker-ce.repo
+
+elasticsearch_image: "docker.elastic.co/elasticsearch/elasticsearch:7.10.1"
+logstash_image: "docker.elastic.co/logstash/logstash:7.10.1"
+kibana_image: "docker.elastic.co/kibana/kibana:7.10.1"
+
+elasticsearch_hostname: elasticsearch
+logstash_hostname: logstash
+kibana_hostname: kibana
+
+logstash_conf: "logstash.conf2"

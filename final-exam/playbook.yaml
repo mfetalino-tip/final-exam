@@ -1,0 +1,116 @@
+---
+  - name: cloning prelim-exam repo &  install git
+    hosts: ubuntu
+    
+    tasks:
+    - name: Include variables from config.yaml
+      include_vars:
+        file: config.yaml
+
+    - name: installing git using role
+      include_role:
+        name: installpackageubuntu
+      vars:
+        url: ""
+        repo: ""
+        package: git
+        service: ""
+      when: ansible_facts['os_family'] == 'Ubuntu'
+
+  - name: installing and configuring one enterprise 
+    hosts: ubuntu
+
+    tasks:
+    - name: Include variables from config.yaml
+      include_vars:
+        file: config.yaml
+
+    - name: installing VSFTPD using role
+      include_role:
+        name: installpackageubuntu
+      vars:
+        url: ""
+        repo: ""
+        package: vsftpd
+        service: ""
+      when: ansible_facts['os_family'] == 'Ubuntu'
+
+    - name: VSFTPD configuring using role
+      include_role:
+        name: configurevsftpdubuntu
+      when: ansible_facts['os_family'] == 'Ubuntu'
+
+  - name: installing and configuring one monitoring tool
+    hosts: ubuntu
+
+    tasks:
+    - name: Include variables from config.yaml
+      include_vars:
+        file: config.yaml
+
+    - name: installing nagios dependencies
+      include_role:
+        name: installpackageubuntu
+      vars:
+        url: ""
+        repo: ""
+        package:
+     
+        service: ""
+      when: ansible_distribution == "Ubuntu"
+
+    - name: nagios configuring
+      include_role:
+        name: configurenagiosubuntu
+      when: ansible_facts['os_family'] == 'Ubuntu'
+
+  - name: installing containerized ELK Stack (Docker)
+    hosts: ubuntu
+    
+    tasks:
+    - name: Include variables from config.yaml
+      include_vars:
+        file: config.yaml
+
+    - name: intalling docker using role
+      include_role:
+        name: installpackageubuntu
+      vars:
+        url: ""
+        repo: ""
+        filename: ""
+        package:
+    
+        service: ""
+      when: ansible_facts['os_family'] == 'Ubuntu' 
+    
+    - name: Add docker python using role
+      include_role:
+        name: installpackageubuntu
+      vars:
+        url: ""
+        repo: ""
+        filename: ""
+        package:
+          - python
+        service: ""
+      when: ansible_distribution == 'Ubuntu'
+
+    - name: Unable firewall
+      include_role:
+        name: stopfirewallubuntu
+      when: ansible_distribution == 'Ubuntu'  
+
+  - name: changing motd
+    hosts: change_motd
+
+    tasks:
+    - name: Include variables from config.yaml
+      include_vars:
+        file: config.yaml
+
+    - name: Include change motd role
+      include_role:
+        name: changemotd
+
+
